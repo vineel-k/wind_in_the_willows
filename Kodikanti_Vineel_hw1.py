@@ -31,11 +31,21 @@ witw_words = nltk.word_tokenize(witw)
 stop =  nltk.corpus.stopwords.words("english")
 
 #remove stopwords from witw_words
-
 witw_goodwords = [i for i in witw_words if i  not in stop]
 
 #remove punctuation
-
 witw_goodwords_nopunct = [i for i in witw_words if i not in string.punctuation]
 
-print(witw_goodwords_nopunct)
+#POS tagging
+#witw_wtags2 has more erros
+# some errors include labling struck as a noun in the phrase the sunshine struck hot on his fur in both lists
+# Onion-sauce is labled as a noun in witw-wtags in the first list but was JJ in the second list
+#created a list of all the differences between both lists below
+witw_wtags =  nltk.pos_tag(witw_words)
+witw_wtags2 = nltk.pos_tag(witw_goodwords_nopunct)
+differences = [i for i in witw_wtags if i not in witw_wtags2]
+
+# extract nouns
+
+witw_nouns = [i for i in witw_wtags if i[1] == 'NN' ]
+
